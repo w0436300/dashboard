@@ -1,76 +1,85 @@
 import { useState } from 'react';
-import { Form, NavLink, useNavigation, useSubmit } from 'react-router-dom';
+import { Form, NavLink, useNavigation, useSubmit, Outlet } from 'react-router-dom';
 import { HomeIcon, ChartBarIcon, CogIcon, MenuIcon, XIcon, SearchIcon } from '@heroicons/react/outline';
 
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigation = useNavigation();
     const submit = useSubmit();
+
     return (
-        <div className="h-screen flex overflow-hidden bg-gray-100">
-            {/* Mobile menu button */}
-            {!isSidebarOpen && (
-                <div className="lg:hidden fixed top-0 left-0 p-4 z-50">
+        <div className="min-h-screen flex flex-col">
+            {/* Header */}
+            <header className="sticky top-0 z-50 bg-white shadow">
+                <div className="flex h-16">
                     <button
+                        type="button"
+                        className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
                         onClick={() => setIsSidebarOpen(true)}
-                        className="text-gray-500 hover:text-gray-600 focus:outline-none"
-                        aria-label="Open menu"
                     >
-                        <MenuIcon className="h-6 w-6" />
+                        <span className="sr-only">Open sidebar</span>
+                        <MenuIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
-                </div>
-            )}
-            {/* Backdrop*/}
-            {isSidebarOpen && (
-                <div
-                    className="fixed inset-0 bg-gray-600 bg-opacity-75 z-30 lg:hidden"
-                    onClick={() => setIsSidebarOpen(false)}
-                    aria-hidden="true"
-                />
-            )}
 
-            {/* Sidebar */}
-            <div
-                className={`
-            fixed inset-y-0 left-0 transform lg:transform-none lg:opacity-100
-            w-64 bg-white border-r border-gray-200 z-40
-            transition duration-200 ease-in-out
-            ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 lg:translate-x-0'}
-            `}
-            >
-                {/* Close button for mobile */}
-                <div className="lg:hidden absolute top-0 right-0 -mr-12 pt-2">
-                    <button
+                    <div className="flex-1 px-4 flex justify-between">
+                        <div className="flex-1 flex items-center">
+                            <h1 className="text-lg font-semibold text-gray-900 truncate flex-shrink-0">
+                                <span className="lg:hidden">Dashboard</span>
+                                <span className="hidden lg:inline">Analytics Dashboard</span>
+                            </h1>
+                            <div className="w-28 sm:w-48 md:w-64 lg:w-96 ml-auto lg:ml-4">
+                                <Form className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    </div>
+                                    <input
+                                        type="search"
+                                        name="search"
+                                        id="search"
+                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                                        placeholder="Search"
+                                    />
+                                </Form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Content area */}
+            <div className="flex-1 flex overflow-hidden">
+                {/* Backdrop */}
+                {isSidebarOpen && (
+                    <div
+                        className="fixed inset-0 bg-gray-600 bg-opacity-75 z-30 lg:hidden"
                         onClick={() => setIsSidebarOpen(false)}
-                        className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                        aria-label="Close menu"
-                    >
-                        <XIcon className="h-6 w-6 text-white" />
-                    </button>
-                </div>
+                        aria-hidden="true"
+                    />
+                )}
 
-                {/* Sidebar content */}
-                <div className="h-full flex flex-col">
-                    <div className="p-4 border-b border-gray-200">
-                        <h1 className="text-xl font-bold text-gray-900">Analytics Dashboard</h1>
+                {/* Sidebar */}
+                <aside
+                    className={`
+                        fixed top-16 bottom-0 lg:static flex-none w-64 
+                        bg-white border-r border-gray-200
+                        transform lg:transform-none lg:opacity-100
+                        transition duration-200 ease-in-out z-40
+                        ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 lg:translate-x-0'}
+                    `}
+                >
+                    {/* Close button for mobile */}
+                    <div className="lg:hidden absolute top-0 right-0 -mr-12 pt-2">
+                        <button
+                            onClick={() => setIsSidebarOpen(false)}
+                            className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            aria-label="Close menu"
+                        >
+                            <XIcon className="h-6 w-6 text-white" />
+                        </button>
                     </div>
-                    {/* Sidebar search */}
-                    <div className="p-4">
-                        <Form id="search-form" role="search" method="post" className="mb-4">
-                            <input
-                                id="q"
-                                aria-label="Search contacts"
-                                placeholder="Search"
-                                type="search"
-                                name="q"
-                                className="w-full p-2 border rounded"
-                            />
-                            <div id="search-spinner" aria-hidden hidden={true} />
-                            <div className="sr-only" aria-live="polite"></div>
-                        </Form>
-                    </div>
-                    {/* Sidebar search */}
-                    <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+
+                    {/* Sidebar content */}
+                    <nav className="h-full px-4 py-4 space-y-1 overflow-y-auto">
                         <NavLink
                             to="/dashboard"
                             className={({ isActive }) => `
@@ -79,16 +88,17 @@ export default function Root() {
                             `}
                             onClick={() => setIsSidebarOpen(false)}
                         >
-                        <HomeIcon className="mr-3 h-6 w-6 text-gray-400" />
+                            <HomeIcon className="mr-3 h-6 w-6 text-gray-400" />
                             Dashboard
                         </NavLink>
 
                         <NavLink
                             to="/sales"
                             className={({ isActive }) => `
-                        flex items-center px-2 py-2 text-sm font-medium rounded-md
-                        ${isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
-                    `}
+                                flex items-center px-2 py-2 text-sm font-medium rounded-md
+                                ${isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
+                            `}
+                            onClick={() => setIsSidebarOpen(false)}
                         >
                             <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
                             Sales Analytics
@@ -97,18 +107,26 @@ export default function Root() {
                         <NavLink
                             to="/settings"
                             className={({ isActive }) => `
-                        flex items-center px-2 py-2 text-sm font-medium rounded-md
-                        ${isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
-                    `}
+                                flex items-center px-2 py-2 text-sm font-medium rounded-md
+                                ${isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
+                            `}
+                            onClick={() => setIsSidebarOpen(false)}
                         >
                             <CogIcon className="mr-3 h-6 w-6 text-gray-400" />
                             Settings
                         </NavLink>
                     </nav>
-                </div>
-                <div id="detail"></div>
-            </div>  
-        </div>
+                </aside>
 
+                {/* Main content */}
+                <main className="flex-1 relative overflow-y-auto bg-gray-100">
+                    <div className="py-6">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            <Outlet />
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
     );
 }

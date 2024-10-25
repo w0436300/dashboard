@@ -6,12 +6,26 @@ import {
 } from "react-router-dom";
 import './index.css'
 import Root from './routes/root';
+import ErrorPage from "./routes/error-page";
+import Dashboard from './routes/dashboard/dashboard';
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+    ],
   },
+  // {
+  //   path: "dashboard",
+  //   element: <Dashboard />,
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
