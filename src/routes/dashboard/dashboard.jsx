@@ -7,6 +7,8 @@ export default function Dashboard() {
     const barChartRef = useRef(null);
     const lineChartRef = useRef(null);
     const pieChartRef = useRef(null);
+    const multiLineChartRef = useRef(null);
+
 
 
     useEffect(() => {
@@ -58,20 +60,59 @@ export default function Dashboard() {
                 }
             },
         };
+
+        // Multi-axis line chart
+        const multiLineOptions = {
+            chart: {
+                type: 'line'
+            },
+            series: [
+                {
+                    name: 'Series 1',
+                    data: [
+                        { x: new Date('2018-02-12').getTime(), y: 76 },
+                        { x: new Date('2018-03-12').getTime(), y: 85 },
+                        { x: new Date('2018-04-12').getTime(), y: 101 },
+                        { x: new Date('2018-05-12').getTime(), y: 98 },
+                        { x: new Date('2018-06-12').getTime(), y: 107 },
+                        { x: new Date('2018-07-12').getTime(), y: 80 }
+                    ]
+                },
+                {
+                    name: 'Series 2',
+                    data: [
+                        { x: new Date('2018-02-12').getTime(), y: 65 },
+                        { x: new Date('2018-03-12').getTime(), y: 75 },
+                        { x: new Date('2018-04-12').getTime(), y: 90 },
+                        { x: new Date('2018-05-12').getTime(), y: 85 },
+                        { x: new Date('2018-06-12').getTime(), y: 95 },
+                        { x: new Date('2018-07-12').getTime(), y: 70 }
+                    ]
+                }
+            ],
+            xaxis: {
+                type: 'datetime'
+            }  
+           
+        };
     
         const barChart = new ApexCharts(barChartRef.current, barOptions);
         const lineChart = new ApexCharts(lineChartRef.current, lineOptions);
         const pieChart = new ApexCharts(pieChartRef.current, pieOptions);
+        const multiLineChart = new ApexCharts(multiLineChartRef.current, multiLineOptions);
+
 
         
         barChart.render();
         lineChart.render();
-        pieChart.render()
+        pieChart.render();
+        multiLineChart.render();
     
         return () => {
             barChart.destroy();
             lineChart.destroy();
             pieChart.destroy();
+            multiLineChart.destroy();
         };
     }, []);
     return (
@@ -203,6 +244,11 @@ export default function Dashboard() {
                 <div className="bg-white rounded-lg shadow p-4">
                     <h3 className="text-lg font-medium mb-4">Revenue Trends</h3>
                     <div ref={pieChartRef}></div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow p-4">
+                    <h3 className="text-lg font-medium mb-4">Revenue Trends</h3>
+                    <div ref={multiLineChartRef}></div>
                 </div>
             </div>
 
