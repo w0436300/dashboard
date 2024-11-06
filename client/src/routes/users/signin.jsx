@@ -1,90 +1,137 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../store/auth/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export default function SignIn() {
-    const navigate = useNavigate();
-    const { login } = useAuth();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const isSubmitting = navigation.state === 'submitting';
+const Signin = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [user, setUser] = useState({ email: "", password: "" });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/auth/google');
+      navigate('/profile');
+    } catch (error) {
+      console.error('Sign in error', error);
+      setErrorMessage('An error occurred during sign in.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        try {
-            await login({
-                email: e.target.email.value,
-                password: e.target.password.value
-            });
-            navigate('/dashboard');
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-    const handleGoogleSignup = async () => {
-        try {
-            const response = await axios.get('/api/auth/google');
-            window.location.href = response.data.url;
-        } catch (error) {
-            console.error('Google sign up error:', error);
-        }
-    };
+    try {
+      const response = await axios.post('/api/auth/signin', {
+        email: user.email,
+        password: user.password,
+      });
+      
+      navigate('/profile');
+    } catch (error) {
+      console.error("Sign in error", error);
+      setErrorMessage("An error occurred during sign in.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 className="text-2xl font-bold mb-4">
+        {loading ? "Processing..." : "Sign In"}
+      </h1>
+      
+      <div className="flex justify-center">
+        <div className="w-full max-w-lg">
+          <h2 className="text-xl font-semibold text-center mb-6">
+            Login to Your Account
+          </h2>
 
-                <div className="w-full">
-                    <button
-                        type="button"
-                        className="w-full py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        onClick={handleGoogleSignup}
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Processing...' : 'Sign in with Google'}
-                    </button>
-                </div>
+          <div className="w-full mb-6">
+            <button
+              className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : 'Sign in with Google'}
+            </button>
+          </div>
 
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <input
-                                name="email"
-                                type="email"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                placeholder="Email address"
-                            />
-                        </div>
-                        <div>
-                            <input
-                                name="password"
-                                type="password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                placeholder="Password"
-                            />
-                        </div>
-                    </div>
-
-                    {error && <div className="text-red-600 text-sm text-center">{error}</div>}
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                        {loading ? 'Signing in...' : 'Sign in'}
-                    </button>
-                </form>
+          <div className="relative flex items-center justify-center my-8">
+            <div className="absolute w-full border-t border-gray-300"></div>
+            <div className="relative bg-white px-4">
+              <span className="text-sm text-gray-500">Or, login with your email</span>
             </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <input
+                type="email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Email address"
+                name="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                required
+              />
+            </div>
+
+            <div>
+              <input
+                type="password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Password"
+                name="password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="flex justify-between items-center">
+              <Link 
+                to="/forgot-password" 
+                className="text-sm text-blue-600 hover:text-blue-500"
+              >
+                Forgot Password?
+              </Link>
+              <button 
+                type="submit" 
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                disabled={loading}
+              >
+                Log In
+              </button>
+            </div>
+
+            {errorMessage && (
+              <div className="p-4 text-red-700 bg-red-100 rounded-md">
+                {errorMessage}
+              </div>
+            )}
+
+            <div className="border-t border-gray-200 pt-6 text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link 
+                  to="/signup" 
+                  className="text-blue-600 hover:text-blue-500"
+                >
+                  Sign Up
+                </Link>
+              </p>
+            </div>
+          </form>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
+
+export default Signin;
