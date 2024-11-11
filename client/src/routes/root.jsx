@@ -11,9 +11,9 @@ import {
 
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const location = useLocation(); // 使用 useLocation 获取当前路径
+    const location = useLocation(); 
     const submit = useSubmit();
-    const isSignInPage = location.pathname === '/signin'; // 获取当前路径并判断
+    const isSignInPage = location.pathname === '/signin'; 
 
     console.log('Current path:', location.pathname);
     console.log('isSignInPage:', isSignInPage);
