@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
-
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 app.use(cors());//allow fetch/ axios request from any domin
+
+
 app.use(express.json())
 
 dotenv.config();
@@ -19,13 +21,17 @@ console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
 
 // connect db
 mongoose.connect(process.env.MONGODB_URI)
-        .then(() => console.log('DB Connected')) 
+        .then(async () => { 
+          console.log('Connected to MongoDB');
+          console.log(`Using database: ${mongoose.connection.name}`);
+
+          const collections = await mongoose.connection.db.listCollections().toArray();
+          console.log('Collections:', collections.map(c => c.name));
+        })
         .catch(error => console.log(`Unable to connect: ${error}`)) 
 
         console.log(process.env.MONGODB_URI);
 
-
-// middleware
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
   credentials: true
@@ -36,6 +42,13 @@ app.use(express.json());
 app.get('/',(req,res) => {
   res.send('Hello from the dashboard app')
 })
+
+app.get('/api/test', (req, res) => {
+  res.send('Backend is running!');
+});
+
+
+app.use('/api/auth', authRoutes);
 
 
 

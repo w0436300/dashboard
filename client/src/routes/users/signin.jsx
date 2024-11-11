@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../../services/api';
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -24,17 +25,22 @@ const Signin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage('');
+
 
     try {
-      const response = await axios.post('/api/auth/signin', {
+      const response = await api.post('/api/auth/signin', {
         email: user.email,
         password: user.password,
       });
+      const { token, user: userData } = response.data;
+      localStorage.setItem('token', token);
+
       
-      navigate('/profile');
+      navigate('/dashboard');
     } catch (error) {
       console.error("Sign in error", error);
-      setErrorMessage("An error occurred during sign in.");
+      setErrorMessage(error.response?.data?.message || "An error occurred during sign in.");
     } finally {
       setLoading(false);
     }

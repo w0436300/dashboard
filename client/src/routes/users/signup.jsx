@@ -1,10 +1,13 @@
 import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
+import api from '../../services/api';
 
 const Signup = () => {
   const navigation = useNavigation();
   const actionData = useActionData();
   const isSubmitting = navigation.state === 'submitting';
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleGoogleSignup = async () => {
     try {
@@ -12,6 +15,31 @@ const Signup = () => {
       window.location.href = response.data.url;
     } catch (error) {
       console.error('Google sign up error:', error);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setErrorMessage('');
+
+    const formData = new FormData(event.target);
+    const data = {
+      firstname: formData.get('firstname'),
+      lastname: formData.get('lastname'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+
+    try {
+      const response = await api.post('/api/auth/register', data);
+
+      if (response.status === 201) {
+        // Registration successful, redirect to login or dashboard
+        window.location.href = '/signin';
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setErrorMessage(error.response?.data?.error || 'An error occurred during registration.');
     }
   };
 
@@ -37,7 +65,7 @@ const Signup = () => {
         </div>
       </div>
 
-      <Form method="post" className="space-y-6">
+      <Form method="post" onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <input
@@ -80,9 +108,9 @@ const Signup = () => {
           </div>
         </div>
 
-        {actionData?.error && (
+        {errorMessage && (
           <div className="p-4 text-red-700 bg-red-100 rounded-md">
-            {actionData.error}
+            {errorMessage}
           </div>
         )}
 
