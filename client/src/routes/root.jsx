@@ -20,15 +20,13 @@ export default function Root() {
     //get firstname from local storage
     useEffect(() => {
         const storedFirstname = localStorage.getItem('firstname');
-        if (storedFirstname) {
-          setFirstname(storedFirstname);
-        }
-      }, [location]);
+        setFirstname(storedFirstname || '');
+    }, [location]);
     
     //log out function
     const handleLogout = () => {
-        localStorage.removeItem('firstname');
-        localStorage.removeItem('token');
+        localStorage.clear();
+        setFirstname(''); 
         navigate('/signin');
       };  
       
