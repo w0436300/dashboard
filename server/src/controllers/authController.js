@@ -2,27 +2,36 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+//register 
 exports.register = async (req, res) => {
   try {
     const { email, password, firstname, lastname } = req.body;
+    console.log('Registration attempt:', email, password);
+
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+        console.log('User already exists');
+        return res.status(400).json({ message: 'User already exists' });
     }
 
     // Hash the password before saving to the database
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Password to hash:', password);
+    console.log('Hashed password:', hashedPassword);
 
     // Create a new user
     const newUser = new User({ 
         email, 
-        password: hashedPassword,
+        password,
         firstname, 
         lastname });
    
     await newUser.save();
+
+    console.log('User registered:', newUser);
+
 
     // generate a JWT token
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
@@ -45,6 +54,7 @@ exports.register = async (req, res) => {
   }
 };
 
+//login function
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -54,12 +64,17 @@ exports.login = async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-        console.log('User not found');
+        console.log('User not found for email:', email);
         return res.status(401).json({ message: 'Wrong email or password' });
     }
 
-    // Check password
-    const isMatch = await user.comparePassword(password);
+    console.log('User found:', user);
+
+
+    // Check password by using bcrypt
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password match result:', isMatch);
+
     if (!isMatch) {
       return res.status(401).json({ message: 'Wrong email or password' });
     }
@@ -76,9 +91,10 @@ exports.login = async (req, res) => {
         lastname: user.lastname,
       },
     });
-    console.log('Login function loaded');
+    console.log('Login successful for user:', user.email);
 
   } catch (error) {
+    console.error('Error during login:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
