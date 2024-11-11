@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, NavLink, useNavigation, useSubmit, Outlet } from 'react-router-dom';
+import { Form, NavLink, useLocation, useSubmit, Outlet } from 'react-router-dom';
 import {
     HomeIcon,
     ChartBarIcon,
@@ -9,51 +9,89 @@ import {
     MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 
-
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const navigation = useNavigation();
+    const location = useLocation(); // 使用 useLocation 获取当前路径
     const submit = useSubmit();
+    const isSignInPage = location.pathname === '/signin'; // 获取当前路径并判断
+
+    console.log('Current path:', location.pathname);
+    console.log('isSignInPage:', isSignInPage);
 
     return (
         <div className="min-h-screen flex flex-col">
             {/* Header */}
             <header className="sticky top-0 z-50 bg-white shadow">
-                <div className="flex h-16">
-                    <button
-                        type="button"
-                        className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
-                        onClick={() => setIsSidebarOpen(true)}
-                    >
-                        <span className="sr-only">Open sidebar</span>
-                        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                <div className="flex h-16 items-center justify-between px-4">
+                    {/* sidebar */}
+                    <div className="flex items-center">                       
+                        <button
+                            type="button"
+                            className="text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
+                            onClick={() => setIsSidebarOpen(true)}
+                        >
+                            <span className="sr-only">Open sidebar</span>
+                            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        </button>
 
-                    <div className="flex-1 px-4 flex justify-between">
-                        <div className="flex-1 flex items-center">
-                            <h1 className="text-lg font-semibold text-gray-900 truncate flex-shrink-0">
-                                <span className="lg:hidden">Dashboard</span>
+                        {/* title */}
+                        <NavLink
+                            to="/dashboard">
+                            <h1 className="ml-4 text-lg font-semibold text-gray-900 truncate">
+                                <span className="lg:hidden"></span>
                                 <span className="hidden lg:inline">Analytics Dashboard</span>
                             </h1>
-                            <h1 className="ml-auto lg:ml-4">Log in</h1>
-                            <div className="w-28 sm:w-48 md:w-64 lg:w-96 ml-auto lg:ml-4">
-                                <Form className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    </div>
-                                    <input
-                                        type="search"
-                                        name="search"
-                                        id="search"
-                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
-                                        placeholder="Search"
-                                    />
+                        </NavLink>
+                        
+                    </div>
+
+                    {/* Right side: Login link/Logo and search bar */}
+                    <div className="flex items-center space-x-4">
+                        {/* login link or Logo */}
+                        <div>
+                            {!isSignInPage ? (
+                                <NavLink
+                                    to="/signin"
+                                    className="hover:text-blue-600 transition-colors"
+                                >
+                                    Log in
+                                </NavLink>
+                            ) : (
+                                <Form action="/dashboard">
+                                    <button
+                                        type="submit"
+                                        className="flex items-center hover:opacity-80 transition-opacity"
+                                    >
+                                        <img 
+                                            src="/image/logo.jpg" 
+                                            alt="Logo"
+                                            className="h-8 w-auto" 
+                                            onError={(e) => console.log('Image failed to load:', e)} 
+                                        />
+                                    </button>
                                 </Form>
-                            </div>
+                            )}
+                        </div>
+
+                        {/* search bar: hide in sm */}
+                        <div className="w-28 sm:w-48 md:w-64 lg:w-96 hidden sm:block">
+                            <Form className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                </div>
+                                <input
+                                    type="search"
+                                    name="search"
+                                    id="search"
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                                    placeholder="Search"
+                                />
+                            </Form>
                         </div>
                     </div>
                 </div>
             </header>
+
 
             {/* Content area */}
             <div className="flex-1 flex overflow-hidden">
