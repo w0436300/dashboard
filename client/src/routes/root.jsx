@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Form, NavLink, useLocation, useSubmit, Outlet } from 'react-router-dom';
+import {useEffect, useState } from 'react';
+import { Form, NavLink, useLocation, useNavigate, useSubmit, Outlet } from 'react-router-dom';
 import {
     HomeIcon,
     ChartBarIcon,
@@ -12,11 +12,31 @@ import {
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const location = useLocation(); 
+    const navigate = useNavigate();
     const submit = useSubmit();
     const isSignInPage = location.pathname === '/signin'; 
+    const [firstname, setFirstname] = useState('');
+
+    //get firstname from local storage
+    useEffect(() => {
+        const storedFirstname = localStorage.getItem('firstname');
+        if (storedFirstname) {
+          setFirstname(storedFirstname);
+        }
+      }, [location]);
+    
+    //log out function
+    const handleLogout = () => {
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('token');
+        navigate('/signin');
+      };  
+      
 
     console.log('Current path:', location.pathname);
     console.log('isSignInPage:', isSignInPage);
+    console.log('Firstname:', firstname);
+
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -48,30 +68,45 @@ export default function Root() {
                     {/* Right side: Login link/Logo and search bar */}
                     <div className="flex items-center space-x-4">
                         {/* login link or Logo */}
-                        <div>
-                            {!isSignInPage ? (
-                                <NavLink
-                                    to="/signin"
-                                    className="hover:text-blue-600 transition-colors"
-                                >
-                                    Log in
-                                </NavLink>
+                        {!isSignInPage ? (
+                            firstname ? (
+                                <details className="dropdown relative">
+                                <summary className="btn text-lg font-bold cursor-pointer">
+                                    {firstname}
+                                </summary>
+                                <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
+                                    <li>
+                                    <button onClick={handleLogout} className="w-full text-left">
+                                        Logout
+                                    </button>
+                                    </li>
+                                </ul>
+                                </details>
                             ) : (
+                                <NavLink to="/signin" className="hover:text-blue-600 transition-colors">
+                                Log in
+                                </NavLink>
+                            )
+                            )  : (
                                 <Form action="/dashboard">
                                     <button
                                         type="submit"
                                         className="flex items-center hover:opacity-80 transition-opacity"
                                     >
-                                        <img 
-                                            src="/image/logo.jpg" 
-                                            alt="Logo"
-                                            className="h-8 w-auto" 
-                                            onError={(e) => console.log('Image failed to load:', e)} 
-                                        />
+                                        {firstname ? (
+                                            <span className="text-lg font-bold">{firstname}</span>
+                                            ) : (
+                                            <img
+                                                src="/image/logo.jpg"
+                                                alt="Logo"
+                                                className="h-8 w-auto"
+                                                onError={(e) => console.log('Image failed to load:', e)}
+                                                />
+                                        )}
                                     </button>
                                 </Form>
                             )}
-                        </div>
+                        
 
                         {/* search bar: hide in sm */}
                         <div className="w-28 sm:w-48 md:w-64 lg:w-96 hidden sm:block">

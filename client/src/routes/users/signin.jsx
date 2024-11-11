@@ -34,7 +34,10 @@ const Signin = () => {
         password: user.password,
       });
       const { token, user: userData } = response.data;
+
+      // Save token and user information to localStorage
       localStorage.setItem('token', token);
+      localStorage.setItem('firstname', userData.firstname);
 
       
       navigate('/dashboard');
