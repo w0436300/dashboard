@@ -11,6 +11,7 @@ import Signup from './routes/users/signup';
 import MarketingPerformance from './routes/MarketingPerformance';
 import CustomerInsights from './routes/CustomerInsights';
 import Subscribe from './routes/Subscribe';
+import Setting from './routes/Setting';
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
                     {
                         path: 'subscribe',
                         element: <Subscribe />
+                    },
+                    {
+                        path: 'setting',
+                        element: <Setting />
                     },
                     {
                         path: 'signup',
