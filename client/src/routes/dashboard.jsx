@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import Card from '../../components/Card';
-import { getTodayOverview } from '../../services/api';
-import SalesTrendChart from '../../components/SalesTrend';
-import TopProductsChart from '../../components/TopProducts';
-import ChannelConversionChart from '../../components/ChannelConversion';
+import Card from '../components/Card';
+import { getTodayOverview } from '../services/api';
+import SalesTrendChart from '../components/SalesTrend';
+import TopProductsChart from '../components/TopProducts';
+import ChannelConversionChart from '../components/ChannelConversion';
 
-export default function Dashboard() {  
+export default function Dashboard() {
     const [overview, setOverview] = useState({
         totalSales: 0,
         totalOrders: 0,
@@ -358,9 +358,8 @@ export default function Dashboard() {
                     <div className="mt-8">
                         <ChannelConversionChart />
                     </div>
-                </div>     
+                </div>
             </div>
-            
         </div>
     );
 }

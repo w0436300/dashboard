@@ -177,7 +177,7 @@ export default function Root() {
                         </NavLink>
 
                         <NavLink
-                            to="/sales"
+                            to="/sales-analytics"
                             className={({ isActive }) => `
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
@@ -190,6 +190,22 @@ export default function Root() {
                         >
                             <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
                             Sales Analytics
+                        </NavLink>
+
+                        <NavLink
+                            to="/customer-insights"
+                            className={({ isActive }) => `
+                                flex items-center px-2 py-2 text-sm font-medium rounded-md
+                                ${
+                                    isActive
+                                        ? 'bg-gray-100 text-gray-900'
+                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                }
+                            `}
+                            onClick={() => setIsSidebarOpen(false)}
+                        >
+                            <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
+                            Customer Insights
                         </NavLink>
 
                         <NavLink

@@ -1,72 +1,83 @@
-# Getting Started with Create React App
+M-Commerce Dashboard
+This is a full-stack project based on React and Node.js, a dashboard for analyzing and displaying e-commerce data. The project uses Create React App to bootstrap the front-end and builds the back-end API with Express.js.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Project Introduction
+This project consists of two main parts:
 
-## Available Scripts
+1. client: front-end application (React)
+2. server: back-end API (Node.js + Express)
 
-In the project directory, you can run:
-cd server 
-node insertData.js
+Install dependencies
 
-### `npm start`
+First clone the repository:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### git clone https://github.com/w0436300/dashboard.git
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Install all dependencies in one click
+Run the following command to install all dependencies under the root directory, client and server directories:
+### npm run install-all
 
-### `npm test`
+Note: Make sure you have installed Node.js and npm, and it is recommended to install concurrently globally to start the front and back ends at the same time.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Available scripts
+In the project root, you can use the following scripts:
 
-### `npm run build`
+1. Start the frontend and backend (development mode)
+npm run dev
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This command will start both:
+Frontend (React): Run at http://localhost:3000
+Backend (Node.js + Express): Run at http://localhost:5000
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Start the frontend (React application)
+### npm run client
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the backend (Node.js API)
+### npm run server
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Build the frontend project
+### npm run build
+This command will build the production version of the React application and put the output into the client/build folder.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Data import and initialization
+There is an insertData.js script in the server directory, which is used to import the initial data into MongoDB.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+How to use
+Enter the server directory:
+### cd server
+Run the data import script:
+### node insertData.js
+If successful, you will see the prompt "Data import successful!"
 
-## Learn More
+File structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+m-comm-dashboard/
+├── client/ # React front-end
+├── server/ # Node.js back-end
+├── package.json # Dependencies and scripts in the root directory
+└── README.md # Project description file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Detailed description
+client: Contains the source code of the front-end React application.
+server: Contains the back-end API and database model.
+install-all: A quick script to install all dependencies at once.
 
-### Code Splitting
+Environment variable configuration
+Create .env files in server and client respectively, and add the following environment variables:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+server/.env
 
-### Analyzing the Bundle Size
+PORT=5001
+MONGODB_URI=
+JWT_SECRET=
+CORS_ORIGIN=http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+client/.env
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+REACT_APP_API_URL=http://localhost:5001
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+REACT_APP_GOOGLE_CLIENT_ID=

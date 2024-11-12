@@ -4,11 +4,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
-import Dashboard from './routes/dashboard/dashboard';
+import Dashboard from './routes/dashboard';
 import Signin from './routes/users/signin';
 import Signup from './routes/users/signup';
-import SalesAnalytics from './routes/dashboard/SalesAnalytics'
-
+import SalesAnalytics from './routes/Analytics';
+import CustomerInsights from './routes/CustomerInsights';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
                     {
                         path: 'sales-analytics',
                         element: <SalesAnalytics />
+                    },
+                    {
+                        path: 'customer-insights',
+                        element: <CustomerInsights />
                     },
                     {
                         path: 'signup',
@@ -48,6 +52,6 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-                <RouterProvider router={router} />
+        <RouterProvider router={router} />
     </React.StrictMode>
 );

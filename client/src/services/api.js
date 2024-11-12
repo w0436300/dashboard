@@ -67,4 +67,45 @@ export const getChannelConversions = async () => {
   }
 };
 
+export const getCustomerInsights = async () => {
+  try {
+    const response = await api.get('/api/customer-insights');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching customer insights:', error);
+    throw error;
+  }
+};
+
+export const getTrafficTrend = async () => {
+  try {
+    const response = await api.get('/api/customer-insights/traffic-trend');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching traffic trend:', error);
+    throw error;
+  }
+};
+
+export const getCustomerRatio = async () => {
+  try {
+    const response = await api.get('/api/customer-insights/customer-ratio');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching customer ratio:', error);
+    throw error;
+  }
+};
+
+export const getGeoDistribution = async () => {
+  try {
+    const response = await api.get('/api/customer-insights/geo-distribution');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching geo distribution:', error);
+    throw error;
+  }
+};
+
+
 export default api;
