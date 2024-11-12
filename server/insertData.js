@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Order = require('./src/models/Order');
 const Product = require('./src/models/Product');
 const Customer = require('./src/models/Customer');
+const Traffic = require('./src/models/Traffic');
+
 // connect db
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -17,7 +19,9 @@ async function insertData() {
     // clear exit data
     await Order.deleteMany({});
     await Product.deleteMany({});
-    await Customer.deleteMany({});
+    await Customer.deleteMany({});    
+    await Traffic.deleteMany({});
+
 
     // insert order data
     await Order.create([
@@ -40,9 +44,19 @@ async function insertData() {
 
     // insert customer data
     await Customer.create([
-      { name: 'John Doe', email: 'john@example.com', createdAt: new Date() },
-      { name: 'Jane Smith', email: 'jane@example.com', createdAt: new Date() },
-      { name: 'Alice Johnson', email: 'alice@example.com', createdAt: new Date() }
+      { name: 'John Doe', email: 'john@example.com', isReturning: false, location: 'USA', createdAt: new Date() },
+      { name: 'Jane Smith', email: 'jane@example.com', isReturning: true, location: 'Canada',  createdAt: new Date() },
+      { name: 'Alice Johnson', email: 'alice@example.com', isReturning: false, location: 'UK',  createdAt: new Date() },
+      { name: 'Cliare Mcdonald', email: 'Cliare@example.com', isReturning: true, location: 'Canada',  createdAt: new Date() },
+      { name: 'Amy K', email: 'Amy@example.com', isReturning: false, location: 'Canada',  createdAt: new Date() }
+      
+    ]);
+
+    //insert traffic data 
+    await Traffic.create([
+        { date: '2024-11-01', pageViews: 120 },
+        { date: '2024-11-02', pageViews: 150 },
+        { date: '2024-11-03', pageViews: 180 }
     ]);
 
     console.log('Data inserted successfully!');

@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard')
+const customerInsightsRoutes = require('./routes/customerInsights')
 const app = express();
 
 app.use(cors());//allow fetch/ axios request from any domin
@@ -52,6 +53,7 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/dashboard', dashboardRoutes);
 
+app.use('/api/customer-insights', customerInsightsRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
