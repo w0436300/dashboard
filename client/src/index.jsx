@@ -35,7 +35,7 @@ const router = createBrowserRouter([
                         element: <CustomerInsights />
                     },
                     {
-                        path: 'subscribes',
+                        path: 'subscribe',
                         element: <Subscribe />
                     },
                     {

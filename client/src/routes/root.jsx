@@ -224,7 +224,7 @@ export default function Root() {
                             Subscribe
                         </NavLink>
 
-                        <NavLink
+                        {/* <NavLink
                             to="/settings"
                             className={({ isActive }) => `
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
@@ -238,7 +238,7 @@ export default function Root() {
                         >
                             <Cog6ToothIcon className="mr-3 h-6 w-6 text-gray-400" />
                             Settings
-                        </NavLink>
+                        </NavLink> */}
                     </nav>
                 </aside>
 
