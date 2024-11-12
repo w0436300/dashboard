@@ -31,9 +31,12 @@ export default function CustomerInsights() {
     return (
         <div className="space-y-8 p-6 bg-gray-50 min-h-screen">
           <h1 className="text-3xl font-bold">Customer Insights</h1>
-          <TrafficChart data={trafficData} />
-          <CustomerRatioChart data={customerRatio} />
-          <GeoDistributionChart data={geoDistribution} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <TrafficChart data={trafficData} />
+            <CustomerRatioChart data={customerRatio} />
+            <GeoDistributionChart data={geoDistribution} />
+          </div>
+          
         </div>
       );
 }
