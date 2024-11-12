@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
-
+const dashboardRoutes = require('./routes/dashboard')
 const app = express();
 
 app.use(cors());//allow fetch/ axios request from any domin
@@ -50,6 +50,7 @@ app.get('/api/test', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 
+app.use('/api/dashboard', dashboardRoutes);
 
 
 app.use((req, res) => {

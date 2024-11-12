@@ -7,6 +7,7 @@ const api = axios.create({
 });
 
 
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -17,5 +18,17 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+export const getTodayOverview = async () => {
+  try {
+    const response = await api.get('/api/dashboard/today-overview');
+    console.log('API Response:', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching today overview:', error);
+    throw error;
+  }
+};
 
 export default api;
