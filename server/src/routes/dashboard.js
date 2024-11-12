@@ -59,4 +59,63 @@ router.get('/today-overview', async (req, res) => {
     }
 });
 
+router.get('/sales-trend', async (req, res) => {
+    try {
+      const salesTrend = await Order.aggregate([
+        { $match: { status: 'completed' } },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            totalSales: { $sum: "$amount" }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ]);
+  
+      res.json(salesTrend);
+    } catch (error) {
+      console.error('Error fetching sales trend:', error);
+      res.status(500).json({ message: 'Error fetching data' });
+    }
+  });
+
+  router.get('/top-products', async (req, res) => {
+    try {
+      const products = await Product.find({}).sort({ popularity: -1 }).limit(5).lean();
+      const formattedProducts = products.map(product => ({
+        _id: product._id,
+        name: product.name,
+        popularity: product.popularity,
+        sales: product.quantitySold && product.totalStock
+          ? Math.round((product.quantitySold / product.totalStock) * 100)
+          : 0
+      }));
+      res.json(formattedProducts);
+    } catch (error) {
+      console.error('Error fetching top products:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+
+router.get('/channel-conversions', async (req, res) => {
+  try {
+      const channelConversions = await Order.aggregate([
+          { $match: { status: 'completed' } },
+          {
+              $group: {
+                  _id: "$channel",
+                  totalSales: { $sum: "$amount" }
+              }
+          },
+          { $sort: { totalSales: -1 } }
+      ]);
+
+      res.json(channelConversions);
+  } catch (error) {
+      console.error('Error fetching channel conversions:', error);
+      res.status(500).json({ message: 'Error fetching data' });
+  }
+});
+  
+
 module.exports = router;

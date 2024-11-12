@@ -7,6 +7,7 @@ import ErrorPage from './routes/error-page';
 import Dashboard from './routes/dashboard/dashboard';
 import Signin from './routes/users/signin';
 import Signup from './routes/users/signup';
+import SalesAnalytics from './routes/dashboard/SalesAnalytics'
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
                     {
                         path: 'dashboard',
                         element: <Dashboard />
+                    },
+                    {
+                        path: 'sales-analytics',
+                        element: <SalesAnalytics />
                     },
                     {
                         path: 'signup',

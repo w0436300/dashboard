@@ -13,6 +13,7 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'completed', 'cancelled'],
     default: 'pending'
   },
+  channel: { type: String, required: true },
   region: String,  // Geographical distribution analysis
   source: String,  // Traffic source analysis
 }, {

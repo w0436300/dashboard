@@ -31,4 +31,40 @@ export const getTodayOverview = async () => {
   }
 };
 
+export const getSalesTrend  = async () => {
+  try {
+    const response = await api.get('/api/dashboard/sales-trend');
+    console.log('API Response:', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching today overview:', error);
+    throw error;
+  }
+};
+
+export const getTopProducts   = async () => {
+  try {
+    const response = await api.get('/api/dashboard/top-products');
+    console.log('API Response:', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching today overview:', error);
+    throw error;
+  }
+};
+
+export const getChannelConversions = async () => {
+  try {
+    const response = await api.get('/api/dashboard/channel-conversions');
+    console.log('API Response:', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching today overview:', error);
+    throw error;
+  }
+};
+
 export default api;
