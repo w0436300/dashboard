@@ -177,7 +177,7 @@ export default function Root() {
                         </NavLink>
 
                         <NavLink
-                            to="/sales-analytics"
+                            to="/marketing-performance"
                             className={({ isActive }) => `
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
@@ -189,7 +189,7 @@ export default function Root() {
                             onClick={() => setIsSidebarOpen(false)}
                         >
                             <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
-                            Sales Analytics
+                           Marketing Performance
                         </NavLink>
 
                         <NavLink

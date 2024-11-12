@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard')
+const marketingRoutes = require('./routes/marketing')
 const customerInsightsRoutes = require('./routes/customerInsights')
 const app = express();
 
@@ -14,10 +15,10 @@ app.use(cors());//allow fetch/ axios request from any domin
 app.use(express.json())
 
 dotenv.config();
-console.log("Environment variables:");
-console.log("PORT:", process.env.PORT);
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
-console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
+// console.log("Environment variables:");
+// console.log("PORT:", process.env.PORT);
+// console.log("MONGODB_URI:", process.env.MONGODB_URI);
+// console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
 
 
 // connect db
@@ -52,6 +53,11 @@ app.get('/api/test', (req, res) => {
 app.use('/api/auth', authRoutes);
 
 app.use('/api/dashboard', dashboardRoutes);
+
+app.use('/api/marketing', marketingRoutes);
+
+
+
 
 app.use('/api/customer-insights', customerInsightsRoutes);
 

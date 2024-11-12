@@ -7,8 +7,11 @@ import ErrorPage from './routes/error-page';
 import Dashboard from './routes/dashboard';
 import Signin from './routes/users/signin';
 import Signup from './routes/users/signup';
-import SalesAnalytics from './routes/Analytics';
+// import SalesAnalytics from './routes/Analytics';
+import MarketingPerformance from './routes/MarketingPerformance';
 import CustomerInsights from './routes/CustomerInsights';
+import Subscribe from './routes/Subscribe';
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -24,12 +27,16 @@ const router = createBrowserRouter([
                         element: <Dashboard />
                     },
                     {
-                        path: 'sales-analytics',
-                        element: <SalesAnalytics />
-                    },
+                        path: 'marketing-performance',
+                        element: <MarketingPerformance />
+                    },    
                     {
                         path: 'customer-insights',
                         element: <CustomerInsights />
+                    },
+                    {
+                        path: 'subscribes',
+                        element: <Subscribe />
                     },
                     {
                         path: 'signup',
