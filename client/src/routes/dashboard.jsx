@@ -134,7 +134,7 @@ export default function Dashboard() {
     // }, []);
     return (
         <div className="space-y-6 p-2 lg:p-0">
-            <div className="bg-white rounded-lg shadow min-w-[22%] lg:min-w-0 p-2 lg:p-4">
+            <div className="bg-base-100 rounded-lg shadow min-w-[22%] lg:min-w-0 p-2 lg:p-4">
                 <h1 className="text-xl">Today's Sales</h1>
                 <p className="text-stone-500 text-sm mb-2">Sales Summery</p>
                 <div className="flex lg:grid lg:grid-cols-4 gap-1.5 lg:gap-4 justify-evenly">
@@ -159,7 +159,7 @@ export default function Dashboard() {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-[10px] lg:text-sm text-gray-500 truncate">Total Salea</div>
-                                <div className="text-sm lg:text-2xl font-bold text-gray-900">$31K</div>
+                                <div className="text-sm lg:text-2xl font-bold text-base-content">$31K</div>
                                 <div className="text-[10px] lg:text-sm text-blue-500 truncate">+8% from yeaterday</div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@ export default function Dashboard() {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-[10px] lg:text-sm text-gray-500 truncate">Total Order</div>
-                                <div className="text-sm lg:text-2xl font-bold text-gray-900">300</div>
+                                <div className="text-sm lg:text-2xl font-bold text-base-content">300</div>
                                 <div className="text-[10px] lg:text-sm text-gray-500">
                                     <span className="text-green-500">+8% from yesterday</span>
                                 </div>
@@ -257,7 +257,7 @@ export default function Dashboard() {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-[10px] lg:text-sm text-gray-500 truncate">Product Sold</div>
-                                <div className="text-sm lg:text-2xl font-bold text-gray-900">5</div>
+                                <div className="text-sm lg:text-2xl font-bold text-base-content">5</div>
                                 <div className="text-[10px] lg:text-sm text-gray-500">
                                     <span className="text-red-500">+8% from yesterday</span>
                                 </div>
@@ -308,7 +308,7 @@ export default function Dashboard() {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-[10px] lg:text-sm text-gray-500 truncate">New Customers</div>
-                                <div className="text-sm lg:text-2xl font-bold text-gray-900">8</div>
+                                <div className="text-sm lg:text-2xl font-bold text-base-content">8</div>
                                 <div className="text-[10px] lg:text-sm text-gray-500">
                                     <span className="text-green-500">+8% from yesterday</span>
                                 </div>
@@ -342,19 +342,19 @@ export default function Dashboard() {
 
             {/* chart */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-white rounded-lg shadow p-4">
+                <div className="bg-base-100 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <SalesTrendChart />
                     </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-4">
+                <div className="bg-base-100 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <TopProductsChart />
                     </div>
                 </div>
 
-                <div className="bg-white rounded-lg shadow p-4">
+                <div className="bg-base-100 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <ChannelConversionChart />
                     </div>

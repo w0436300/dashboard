@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, NavLink, useLocation, useNavigate, useSubmit, Outlet } from 'react-router-dom';
 import {
     HomeIcon,
@@ -8,41 +8,34 @@ import {
     XMarkIcon,
     MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
+import ThemeSwitcher from '../components/ThemeSwitcher';
 
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const location = useLocation(); 
+    const location = useLocation();
     const navigate = useNavigate();
     const submit = useSubmit();
-    const isSignInPage = location.pathname === '/signin'; 
+    const isSignInPage = location.pathname === '/signin';
     const [firstname, setFirstname] = useState('');
 
-    //get firstname from local storage
-    useEffect(() => {
-        const storedFirstname = localStorage.getItem('firstname');
-        setFirstname(storedFirstname || '');
-    }, [location]);
-    
     //log out function
     const handleLogout = () => {
         localStorage.clear();
-        setFirstname(''); 
+        setFirstname('');
         navigate('/signin');
-      };  
-      
+    };
 
     console.log('Current path:', location.pathname);
     console.log('isSignInPage:', isSignInPage);
     console.log('Firstname:', firstname);
 
-
     return (
         <div className="min-h-screen flex flex-col">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-white shadow">
+            <header className="sticky top-0 z-50 bg-base-50 shadow">
                 <div className="flex h-16 items-center justify-between px-4">
                     {/* sidebar */}
-                    <div className="flex items-center">                       
+                    <div className="flex items-center">
                         <button
                             type="button"
                             className="text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden"
@@ -53,58 +46,51 @@ export default function Root() {
                         </button>
 
                         {/* title */}
-                        <NavLink
-                            to="/dashboard">
-                            <h1 className="ml-4 text-lg font-semibold text-gray-900 truncate">
+                        <NavLink to="/dashboard">
+                            <h1 className="ml-4 text-lg font-semibold text-base-content truncate">
                                 <span className="lg:hidden"></span>
                                 <span className="hidden lg:inline">Analytics Dashboard</span>
                             </h1>
                         </NavLink>
-                        
                     </div>
 
                     {/* Right side: Login link/Logo and search bar */}
                     <div className="flex items-center space-x-4">
+                        <ThemeSwitcher />
                         {/* login link or Logo */}
                         {!isSignInPage ? (
                             firstname ? (
                                 <details className="dropdown relative">
-                                <summary className="btn text-lg font-bold cursor-pointer">
-                                    {firstname}
-                                </summary>
-                                <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
-                                    <li>
-                                    <button onClick={handleLogout} className="w-full text-left">
-                                        Logout
-                                    </button>
-                                    </li>
-                                </ul>
+                                    <summary className="btn text-lg font-bold cursor-pointer">{firstname}</summary>
+                                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
+                                        <li>
+                                            <button onClick={handleLogout} className="w-full text-left">
+                                                Logout
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </details>
                             ) : (
                                 <NavLink to="/signin" className="hover:text-blue-600 transition-colors">
-                                Log in
+                                    Log in
                                 </NavLink>
                             )
-                            )  : (
-                                <Form action="/dashboard">
-                                    <button
-                                        type="submit"
-                                        className="flex items-center hover:opacity-80 transition-opacity"
-                                    >
-                                        {firstname ? (
-                                            <span className="text-lg font-bold">{firstname}</span>
-                                            ) : (
-                                            <img
-                                                src="/image/logo.jpg"
-                                                alt="Logo"
-                                                className="h-8 w-auto"
-                                                onError={(e) => console.log('Image failed to load:', e)}
-                                                />
-                                        )}
-                                    </button>
-                                </Form>
-                            )}
-                        
+                        ) : (
+                            <Form action="/dashboard">
+                                <button type="submit" className="flex items-center hover:opacity-80 transition-opacity">
+                                    {firstname ? (
+                                        <span className="text-lg font-bold">{firstname}</span>
+                                    ) : (
+                                        <img
+                                            src="/image/logo.jpg"
+                                            alt="Logo"
+                                            className="h-8 w-auto"
+                                            onError={(e) => console.log('Image failed to load:', e)}
+                                        />
+                                    )}
+                                </button>
+                            </Form>
+                        )}
 
                         {/* search bar: hide in sm */}
                         <div className="w-28 sm:w-48 md:w-64 lg:w-96 hidden sm:block">
@@ -116,7 +102,7 @@ export default function Root() {
                                     type="search"
                                     name="search"
                                     id="search"
-                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-base-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
                                     placeholder="Search"
                                 />
                             </Form>
@@ -124,7 +110,6 @@ export default function Root() {
                     </div>
                 </div>
             </header>
-
 
             {/* Content area */}
             <div className="flex-1 flex overflow-hidden">
@@ -141,7 +126,7 @@ export default function Root() {
                 <aside
                     className={`
                         fixed top-16 bottom-0 lg:static flex-none w-64 
-                        bg-white border-r border-gray-200
+                        bg-base-100 border-r border-base-300
                         transform lg:transform-none lg:opacity-100
                         transition duration-200 ease-in-out z-40
                         ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 lg:translate-x-0'}
@@ -166,8 +151,8 @@ export default function Root() {
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
                                     isActive
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -182,14 +167,14 @@ export default function Root() {
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
                                     isActive
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
                         >
                             <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
-                           Marketing Performance
+                            Marketing Performance
                         </NavLink>
 
                         <NavLink
@@ -198,8 +183,8 @@ export default function Root() {
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
                                     isActive
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -214,8 +199,8 @@ export default function Root() {
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
                                     isActive
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -230,8 +215,8 @@ export default function Root() {
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md
                                 ${
                                     isActive
-                                        ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -243,7 +228,7 @@ export default function Root() {
                 </aside>
 
                 {/* Main content */}
-                <main className="flex-1 relative overflow-y-auto bg-gray-100">
+                <main className="flex-1 relative overflow-y-auto bg-base-200">
                     <div className="py-6">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                             <Outlet />
