@@ -24,7 +24,6 @@ export default function Root() {
         const storedFirstname = localStorage.getItem('firstname');
         setFirstname(storedFirstname || '');
     }, [location]);
-    
 
     //log out function
     const handleLogout = () => {
@@ -41,7 +40,7 @@ export default function Root() {
     return (
         <div className="min-h-screen flex flex-col">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-base-50 shadow">
+            <header className="sticky top-0 z-50 bg-base-100 shadow">
                 <div className="flex h-16 items-center justify-between px-4">
                     {/* sidebar */}
                     <div className="flex items-center">
@@ -70,10 +69,8 @@ export default function Root() {
                         {!isSignInPage ? (
                             firstname ? (
                                 <details className="dropdown relative">
-                                    <summary className="btn text-lg font-bold cursor-pointer">
-                                        {firstname}
-                                    </summary>
-                                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
+                                    <summary className="btn text-lg font-bold cursor-pointer">{firstname}</summary>
+                                    <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
                                         <li>
                                             <button onClick={handleLogout} className="w-full text-left">
                                                 Logout
@@ -113,7 +110,7 @@ export default function Root() {
                                     type="search"
                                     name="search"
                                     id="search"
-                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-base-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-base-200 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-sm"
                                     placeholder="Search"
                                 />
                             </Form>
@@ -137,7 +134,7 @@ export default function Root() {
                 <aside
                     className={`
                         fixed top-16 bottom-0 lg:static flex-none w-64 
-                        bg-base-100 border-r border-base-300
+                        bg-base-200 border-r border-base-300
                         transform lg:transform-none lg:opacity-100
                         transition duration-200 ease-in-out z-40
                         ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 lg:translate-x-0'}
@@ -163,7 +160,7 @@ export default function Root() {
                                 ${
                                     isActive
                                         ? 'bg-base-200 text-base-content'
-                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -179,7 +176,7 @@ export default function Root() {
                                 ${
                                     isActive
                                         ? 'bg-base-200 text-base-content'
-                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -195,7 +192,7 @@ export default function Root() {
                                 ${
                                     isActive
                                         ? 'bg-base-200 text-base-content'
-                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -211,7 +208,7 @@ export default function Root() {
                                 ${
                                     isActive
                                         ? 'bg-base-200 text-base-content'
-                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -227,7 +224,7 @@ export default function Root() {
                                 ${
                                     isActive
                                         ? 'bg-base-200 text-base-content'
-                                        : 'text-base-content hover:bg-gray-50 hover:text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
                                 }
                             `}
                             onClick={() => setIsSidebarOpen(false)}
@@ -239,7 +236,7 @@ export default function Root() {
                 </aside>
 
                 {/* Main content */}
-                <main className="flex-1 relative overflow-y-auto bg-base-200">
+                <main className="flex-1 relative overflow-y-auto bg-base-300">
                     <div className="py-6">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                             <Outlet />
