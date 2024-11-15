@@ -15,6 +15,7 @@ First clone the repository:
 
 Install all dependencies in one click
 Run the following command to install all dependencies under the root directory, client and server directories:
+
 ### npm run install-all
 
 Note: Make sure you have installed Node.js and npm, and it is recommended to install concurrently globally to start the front and back ends at the same time.
@@ -23,32 +24,38 @@ Available scripts
 In the project root, you can use the following scripts:
 
 1. Start the frontend and backend (development mode)
-npm run dev
+   npm run dev
 
 This command will start both:
 Frontend (React): Run at http://localhost:3000
 Backend (Node.js + Express): Run at http://localhost:5000
 
 2. Start the frontend (React application)
+
 ### npm run client
 
 3. Start the backend (Node.js API)
+
 ### npm run server
 
-
 4. Build the frontend project
-### npm run build
-This command will build the production version of the React application and put the output into the client/build folder.
 
+### npm run build
+
+This command will build the production version of the React application and put the output into the client/build folder.
 
 Data import and initialization
 There is an insertData.js script in the server directory, which is used to import the initial data into MongoDB.
 
 How to use
 Enter the server directory:
+
 ### cd server
+
 Run the data import script:
+
 ### node insertData.js
+
 If successful, you will see the prompt "Data import successful!"
 
 File structure
@@ -74,10 +81,9 @@ MONGODB_URI=
 JWT_SECRET=
 CORS_ORIGIN=http://localhost:3000
 
-
 client/.env
 
 REACT_APP_API_URL=http://localhost:5001
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-REACT_APP_GOOGLE_CLIENT_ID=
+REACT_APP_GOOGLE_CLIENT=
+REACT_APP_GOOGLE_CLIENT_SECRET=
+REACT_APP_REACT_APP_GOOGLE_CLIENT=
