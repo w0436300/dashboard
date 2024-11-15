@@ -97,7 +97,7 @@ export default function Example() {
                 )
                 }
             </h3>
-            <p className="mt-4 flex items-baseline gap-x-2">
+            <p className="mt-4 flex items-baseline gap-x-2 justify-center">
               <span
                 className={classNames(
                   tier.featured ? 'text-white' : 'text-gray-900',
