@@ -1,12 +1,12 @@
 //subscribe frontend
-import React from 'react';
-
+import { useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 
 const tiers = [
     {
         name: 'Free',
         id: 'tier-free',
+        priceId: null,
         href: '#',
         price: '$0',
         period: 'forever',
@@ -24,7 +24,8 @@ const tiers = [
     {
         name: 'Monthly',
         id: 'tier-monthly',
-        href: '#',
+        priceId: 'price_1QLMdBEieCH6fleqcgMt0iys',
+        href: 'https://buy.stripe.com/test_fZedS11Y83YufNC8ww',
         price: '$9.9',
         period: '/month',
         description: 'Great for growing businesses and teams.',
@@ -43,7 +44,8 @@ const tiers = [
     {
         name: 'Lifetime',
         id: 'tier-lifetime',
-        href: '#',
+        priceId: 'price_1QLMioEieCH6fleqWEzM5BPS',
+        href: 'https://buy.stripe.com/test_bIY7tD6eo52y0SI5km',
         price: '$199',
         period: 'one-time payment',
         description: 'Best value for long-term commitment.',
@@ -67,13 +69,18 @@ function classNames(...classes) {
 }
 
 export default function SubscriptionPage() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    
+
     return (
         <div className="relative isolate bg-base-200 px-6 py-9">
+            {/* title */}
             <div className="mx-auto max-w-4xl text-center">
-                <h2 className="text-xl font-semibold text-indigo-600"> Choose the right plan for you
-                </h2>     
+                <h2 className="text-xl font-semibold text-indigo-600"> Choose the right plan for you</h2>
             </div>
-           
+            {/* price card */}
             <div className="mx-auto mt-4 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-3">
                 {tiers.map((tier) => (
                     <div
@@ -109,7 +116,7 @@ export default function SubscriptionPage() {
                             <span
                                 className={classNames(tier.featured ? 'text-gray-400' : 'text-gray-500', 'text-base')}
                             >
-                                /month
+                                {tier.period}
                             </span>
                         </p>
                         <p
@@ -146,6 +153,7 @@ export default function SubscriptionPage() {
                             </span>
                         ) : (
                             <a
+                                target="_blank"
                                 href={tier.href}
                                 aria-describedby={tier.id}
                                 className={classNames(

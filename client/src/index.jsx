@@ -67,11 +67,12 @@ console.log('Google Client ID:', process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT}>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT}>
         <React.StrictMode>
             <RouterProvider router={router} />
         </React.StrictMode>
     </GoogleOAuthProvider>
+    
 );
 
 //reference: google login: https://blog.logrocket.com/guide-adding-google-login-react-app/
