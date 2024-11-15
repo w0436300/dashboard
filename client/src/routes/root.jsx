@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { googleLogout } from '@react-oauth/google';
 import { Form, NavLink, useLocation, useNavigate, useSubmit, Outlet } from 'react-router-dom';
 import {
     HomeIcon,
@@ -27,6 +28,7 @@ export default function Root() {
 
     //log out function
     const handleLogout = () => {
+        googleLogout();
         localStorage.clear();
         setFirstname('');
         navigate('/signin');

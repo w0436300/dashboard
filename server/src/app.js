@@ -20,6 +20,12 @@ dotenv.config();
 // console.log("PORT:", process.env.PORT);
 // console.log("MONGODB_URI:", process.env.MONGODB_URI);
 // console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
+if (!process.env.JWT_SECRET) {
+  console.error('JWT_SECRET is not defined in environment variables');
+  process.exit(1);
+}
+console.log('JWT Secret:', process.env.JWT_SECRET ? 'Configured' : 'Missing');
+
 
 
 // connect db
