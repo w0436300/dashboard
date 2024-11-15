@@ -1,15 +1,19 @@
 
 const express = require('express');
 const router = express.Router();
+
+//Import customerSchema to interact with the database in the route handler.
 const Customer = require('../models/Customer');
 
 // get past 7days data
+
+//Defines a route for GET requests,
 router.get('/traffic-trend', async (req, res) => {
     try {
       const today = new Date();
       const data = [];
   
-      // generate past 7days data
+      // The function generates traffic data for the past 7 days and returns it to the client
       for (let i = 6; i >= 0; i--) {
         const date = new Date(today);
         date.setDate(today.getDate() - i);
