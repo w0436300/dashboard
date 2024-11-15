@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+//Import the router module and mount it to a specific path
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard')
 const marketingRoutes = require('./routes/marketing')
@@ -58,7 +59,9 @@ app.use('/api/marketing', marketingRoutes);
 
 
 
-
+//api/customer-insights/traffic-trend
+//api/customer-insights/customer-ratio
+//api/customer-insights/geo-distribution
 app.use('/api/customer-insights', customerInsightsRoutes);
 
 app.use((req, res) => {
