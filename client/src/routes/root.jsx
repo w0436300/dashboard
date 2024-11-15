@@ -18,6 +18,13 @@ export default function Root() {
     const isSignInPage = location.pathname === '/signin';
     const [firstname, setFirstname] = useState('');
 
+    //get firstname from local storage
+    useEffect(() => {
+        const storedFirstname = localStorage.getItem('firstname');
+        setFirstname(storedFirstname || '');
+    }, [location]);
+    
+
     //log out function
     const handleLogout = () => {
         localStorage.clear();
@@ -61,7 +68,9 @@ export default function Root() {
                         {!isSignInPage ? (
                             firstname ? (
                                 <details className="dropdown relative">
-                                    <summary className="btn text-lg font-bold cursor-pointer">{firstname}</summary>
+                                    <summary className="btn text-lg font-bold cursor-pointer">
+                                        {firstname}
+                                    </summary>
                                     <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow absolute right-0 mt-2">
                                         <li>
                                             <button onClick={handleLogout} className="w-full text-left">
