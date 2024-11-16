@@ -50,7 +50,7 @@ const Signup = () => {
             <div className="w-full">
                 <button
                     type="button"
-                    className="w-full py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="w-full py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-base-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={handleGoogleSignup}
                     disabled={isSubmitting}
                 >
@@ -60,7 +60,7 @@ const Signup = () => {
 
             <div className="relative flex items-center justify-center my-8">
                 <div className="absolute w-full border-t border-gray-300"></div>
-                <div className="relative bg-base-100 px-4">
+                <div className="relative bg-base-200 px-4">
                     <p className="text-sm text-gray-500">Or, register with your email</p>
                 </div>
             </div>

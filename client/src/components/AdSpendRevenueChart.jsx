@@ -73,7 +73,7 @@ export default function AdSpendRevenueChart() {
     ];
 
     return (
-        <div className="bg-base-100 rounded-lg shadow p-6">
+        <div className="bg-base-200 rounded-lg shadow p-6">
             <Chart options={options} series={series} type="line" height={350} />
         </div>
     );

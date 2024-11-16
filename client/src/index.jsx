@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
                     {
                         path: 'marketing-performance',
                         element: <MarketingPerformance />
-                    },    
+                    },
                     {
                         path: 'customer-insights',
                         element: <CustomerInsights />
@@ -61,9 +62,17 @@ const router = createBrowserRouter([
     // },
 ]);
 
+console.log('Google Client ID:', process.env.REACT_APP_GOOGLE_CLIENT_ID);
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT}>
+        <React.StrictMode>
+            <RouterProvider router={router} />
+        </React.StrictMode>
+    </GoogleOAuthProvider>
+    
 );
+
+//reference: google login: https://blog.logrocket.com/guide-adding-google-login-react-app/

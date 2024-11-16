@@ -1,27 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../../services/api';
+
+//import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const Signin = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [user, setUser] = useState({ email: '', password: '' });
+    const [user, setUser] = useState(null);
+    const [credentials, setCredentials] = useState({ email: '', password: '' });
 
-    const handleGoogleSignIn = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get('/api/auth/google');
-            navigate('/profile');
-        } catch (error) {
-            console.error('Sign in error', error);
-            setErrorMessage('An error occurred during sign in.');
-        } finally {
-            setLoading(false);
+    //google login
+    //https://blog.logrocket.com/guide-adding-google-login-react-app
+    const googleLogin = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            setUser(codeResponse);
+        },
+        onError: (error) => {
+            console.log('Login Failed:', error);
+            setErrorMessage('Failed to sign in with Google. Please try again.');
         }
-    };
+    });
 
+    // Listen for user changes and get personal information
+    useEffect(() => {
+        if (user) {
+            axios
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.access_token}`,
+                        Accept: 'application/json'
+                    }
+                })
+                .then((res) => {
+                    //save user info ti local storage
+                    localStorage.setItem('token', user.access_token);
+                    localStorage.setItem('firstname', res.data.given_name || res.data.name);
+                    navigate('/dashboard');
+                })
+                .catch((err) => console.log(err));
+        }
+    }, [user, navigate]);
+
+    //email login
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -29,8 +53,8 @@ const Signin = () => {
 
         try {
             const response = await api.post('/api/auth/signin', {
-                email: user.email,
-                password: user.password
+                email: credentials.email,
+                password: credentials.password
             });
             const { token, user: userData } = response.data;
 
@@ -57,8 +81,8 @@ const Signin = () => {
 
                     <div className="w-full mb-6">
                         <button
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                            onClick={handleGoogleSignIn}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-base-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                            onClick={googleLogin}
                             disabled={loading}
                         >
                             {loading ? 'Signing in...' : 'Sign in with Google'}
@@ -67,7 +91,7 @@ const Signin = () => {
 
                     <div className="relative flex items-center justify-center my-8">
                         <div className="absolute w-full border-t border-gray-300"></div>
-                        <div className="relative bg-base-100 px-4">
+                        <div className="relative bg-base-200 px-4">
                             <span className="text-sm text-gray-500">Or, login with your email</span>
                         </div>
                     </div>
@@ -79,8 +103,8 @@ const Signin = () => {
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Email address"
                                 name="email"
-                                value={user.email}
-                                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                value={credentials.email}
+                                onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                                 required
                             />
                         </div>
@@ -91,8 +115,8 @@ const Signin = () => {
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Password"
                                 name="password"
-                                value={user.password}
-                                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                value={credentials.password}
+                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                                 required
                             />
                         </div>
@@ -106,7 +130,7 @@ const Signin = () => {
                                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                                 disabled={loading}
                             >
-                                Log In
+                                {loading ? 'Signing in...' : 'Log In'}
                             </button>
                         </div>
 

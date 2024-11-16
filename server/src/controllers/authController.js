@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 //register 
 exports.register = async (req, res) => {
@@ -13,7 +14,7 @@ exports.register = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         console.log('User already exists');
-        return res.status(400).json({ message: 'User already exists' });
+        return res.status(400).json({ message: 'You already have an account, please log in' });
     }
 
     // Hash the password before saving to the database
@@ -26,7 +27,10 @@ exports.register = async (req, res) => {
         email, 
         password,
         firstname, 
-        lastname });
+        lastname,
+        subscription: {
+          status: 'free'
+        } });
    
     await newUser.save();
 
@@ -34,8 +38,13 @@ exports.register = async (req, res) => {
 
 
     // generate a JWT token
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign(
+      { userId: newUser._id }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '24h' }
+    );
 
+    //return token and user info
     res.status(201).json({ 
         message: 'User registered successfully',
         token,
@@ -44,6 +53,7 @@ exports.register = async (req, res) => {
           email: newUser.email,
           firstname: newUser.firstname,
           lastname: newUser.lastname,
+          subscription: newUser.subscription
         },
     });
     console.log('Register function loaded');
@@ -55,10 +65,17 @@ exports.register = async (req, res) => {
 };
 
 //login function
+// login Flow {
+// 1. Receive user input (email, password)
+// 2. Verify user existence
+// 3. Verify password
+// 4. Generate JWT token
+// 5. Return token and user information
+// }
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('Login attempt:', email, password);
+    //console.log('Login attempt:', email, password);
 
 
     // Find user by email
@@ -82,6 +99,7 @@ exports.login = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
+    //return token and user info
     res.json({
       token,
       user: {
@@ -89,6 +107,7 @@ exports.login = async (req, res) => {
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
+        subscription: user.subscription
       },
     });
     console.log('Login successful for user:', user.email);

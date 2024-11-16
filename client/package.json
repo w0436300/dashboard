@@ -14,6 +14,8 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@react-oauth/google": "^0.12.1",
+    "@stripe/react-stripe-js": "^2.9.0",
+    "@stripe/stripe-js": "^4.10.0",
     "apexcharts": "^3.54.1",
     "axios": "^1.7.7",
     "dashboard-1": "file:..",
