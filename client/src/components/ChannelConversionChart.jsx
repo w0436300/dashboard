@@ -22,7 +22,7 @@ export default function ChannelConversionChart() {
     const series = [{ name: 'Conversions', data: conversionData.conversions }];
 
     return (
-        <div className="bg-base-100 rounded-lg shadow p-6">
+        <div className="bg-base-200 rounded-lg shadow p-6">
             <h2 className="text-xl font-bold mb-4">Customer Acquisition Cost</h2>
             <Chart options={options} series={series} type="bar" height={350} />
         </div>

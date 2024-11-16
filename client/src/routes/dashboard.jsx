@@ -134,7 +134,7 @@ export default function Dashboard() {
     // }, []);
     return (
         <div className="space-y-6 p-2 lg:p-0">
-            <div className="bg-base-100 rounded-lg shadow min-w-[22%] lg:min-w-0 p-2 lg:p-4">
+            <div className="bg-base-200 rounded-lg shadow min-w-[22%] lg:min-w-0 p-2 lg:p-4">
                 <h1 className="text-xl">Today's Sales</h1>
                 <p className="text-stone-500 text-sm mb-2">Sales Summery</p>
                 <div className="flex lg:grid lg:grid-cols-4 gap-1.5 lg:gap-4 justify-evenly">
@@ -342,19 +342,19 @@ export default function Dashboard() {
 
             {/* chart */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-base-100 rounded-lg shadow p-4">
+                <div className="bg-base-200 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <SalesTrendChart />
                     </div>
                 </div>
 
-                <div className="bg-base-100 rounded-lg shadow p-4">
+                <div className="bg-base-200 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <TopProductsChart />
                     </div>
                 </div>
 
-                <div className="bg-base-100 rounded-lg shadow p-4">
+                <div className="bg-base-200 rounded-lg shadow p-4">
                     <div className="mt-8">
                         <ChannelConversionChart />
                     </div>

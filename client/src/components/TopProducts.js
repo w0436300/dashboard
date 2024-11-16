@@ -17,7 +17,7 @@ const TopProductsTable = () => {
     }, []);
 
     return (
-        <div className="bg-base-100 rounded-lg shadow p-6">
+        <div className="bg-base-200 rounded-lg shadow p-6">
             <h2 className="text-2xl font-bold mb-6">Top Products</h2>
             <table className="w-full text-left table-auto">
                 <thead>

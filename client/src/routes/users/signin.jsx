@@ -1,4 +1,4 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../../services/api';
@@ -26,31 +26,26 @@ const Signin = () => {
     });
 
     // Listen for user changes and get personal information
-    useEffect(
-        () => {
-            if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setProfile(res.data);
-                        //save user info ti local storage
-                        localStorage.setItem('token', user.access_token);
-                        localStorage.setItem('firstname', res.data.given_name || res.data.name);
-                        navigate('/dashboard');
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [ user, navigate ]
-    );
+    useEffect(() => {
+        if (user) {
+            axios
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.access_token}`,
+                        Accept: 'application/json'
+                    }
+                })
+                .then((res) => {
+                    //save user info ti local storage
+                    localStorage.setItem('token', user.access_token);
+                    localStorage.setItem('firstname', res.data.given_name || res.data.name);
+                    navigate('/dashboard');
+                })
+                .catch((err) => console.log(err));
+        }
+    }, [user, navigate]);
 
-    
-    //email login 
+    //email login
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -79,27 +74,24 @@ const Signin = () => {
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
             <h1 className="text-2xl font-bold mb-4">{loading ? 'Processing...' : 'Sign In'}</h1>
-           
+
             <div className="flex justify-center">
                 <div className="w-full max-w-lg">
                     <h2 className="text-xl font-semibold text-center mb-6">Login to Your Account</h2>
 
                     <div className="w-full mb-6">
                         <button
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-base-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                             onClick={googleLogin}
                             disabled={loading}
                         >
-
                             {loading ? 'Signing in...' : 'Sign in with Google'}
                         </button>
-                    
-
                     </div>
 
                     <div className="relative flex items-center justify-center my-8">
                         <div className="absolute w-full border-t border-gray-300"></div>
-                        <div className="relative bg-base-100 px-4">
+                        <div className="relative bg-base-200 px-4">
                             <span className="text-sm text-gray-500">Or, login with your email</span>
                         </div>
                     </div>
@@ -138,7 +130,7 @@ const Signin = () => {
                                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                                 disabled={loading}
                             >
-                                 {loading ? 'Signing in...' : 'Log In'}
+                                {loading ? 'Signing in...' : 'Log In'}
                             </button>
                         </div>
 
