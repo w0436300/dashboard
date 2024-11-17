@@ -39,6 +39,8 @@ const Signin = () => {
                     //save user info ti local storage
                     localStorage.setItem('token', user.access_token);
                     localStorage.setItem('firstname', res.data.given_name || res.data.name);
+                    // localStorage.setItem('subscription', JSON.stringify(userData.subscription));
+
                     navigate('/dashboard');
                 })
                 .catch((err) => console.log(err));
@@ -61,6 +63,7 @@ const Signin = () => {
             // Save token and user information to localStorage
             localStorage.setItem('token', token);
             localStorage.setItem('firstname', userData.firstname);
+            localStorage.setItem('subscription', JSON.stringify(userData.subscription));
 
             navigate('/dashboard');
         } catch (error) {

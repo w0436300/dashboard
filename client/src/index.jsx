@@ -13,7 +13,9 @@ import MarketingPerformance from './routes/MarketingPerformance';
 import CustomerInsights from './routes/CustomerInsights';
 import Subscribe from './routes/Subscribe';
 import Setting from './routes/Setting';
-
+import SuccessPage from './routes/successPage';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthProvider';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -34,15 +36,16 @@ const router = createBrowserRouter([
                     },
                     {
                         path: 'customer-insights',
-                        element: <CustomerInsights />
+                        element:(<ProtectedRoute><CustomerInsights /></ProtectedRoute>)
+                         
                     },
                     {
                         path: 'subscribe',
-                        element: <Subscribe />
+                        element:<Subscribe />
                     },
                     {
                         path: 'setting',
-                        element: <Setting />
+                        element: (<ProtectedRoute><Setting /></ProtectedRoute>)
                     },
                     {
                         path: 'signup',
@@ -51,6 +54,10 @@ const router = createBrowserRouter([
                     {
                         path: 'signin',
                         element: <Signin />
+                    },
+                    {
+                        path: '/success',
+                        element: <SuccessPage />
                     }
                 ]
             }
@@ -68,9 +75,12 @@ console.log('Google Client ID:', process.env.REACT_APP_GOOGLE_CLIENT_ID);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT}>
-        <React.StrictMode>
+            <AuthProvider>
+                <React.StrictMode>
             <RouterProvider router={router} />
         </React.StrictMode>
+            </AuthProvider>
+        
     </GoogleOAuthProvider>
     
 );

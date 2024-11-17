@@ -39,7 +39,7 @@ const Signup = () => {
             }
         } catch (error) {
             console.error('Registration error:', error);
-            setErrorMessage(error.response?.data?.error || 'An error occurred during registration.');
+            setErrorMessage(error.response?.data?.message || 'An error occurred during registration.');
         }
     };
 
