@@ -1,89 +1,71 @@
 M-Commerce Dashboard
-This is a full-stack project based on React and Node.js, a dashboard for analyzing and displaying e-commerce data. The project uses Create React App to bootstrap the front-end and builds the back-end API with Express.js.
+This is a full-stack project based on React (front-end) and Node.js + Express (back-end). It provides a dashboard for analyzing and displaying e-commerce data. The project uses Create React App to set up the front-end and builds the back-end API using Express.js.
+
+Project Structure
+m-comm-dashboard/
+├── client/           # React front-end
+├── server/           # Node.js back-end
+├── package.json      # Dependencies and scripts for the root
+└── README.md    
 
 Project Introduction
-This project consists of two main parts:
+The project consists of two main parts:
 
-1. client: front-end application (React)
-2. server: back-end API (Node.js + Express)
+client: Front-end application (React)
+server: Back-end API (Node.js + Express)
 
-Install dependencies
+Prerequisites
+Node.js and npm should be installed on your system.
 
-First clone the repository:
+Installation
+1. Clone the repository:
+git clone https://github.com/w0436300/dashboard.git
 
-### git clone https://github.com/w0436300/dashboard.git
-
-Install all dependencies in one click
+2. Install all dependencies in one click
 Run the following command to install all dependencies under the root directory, client and server directories:
-
-### npm run install-all
-
-Note: Make sure you have installed Node.js and npm, and it is recommended to install concurrently globally to start the front and back ends at the same time.
+   npm run install-all
 
 Available scripts
 In the project root, you can use the following scripts:
-
 1. Start the frontend and backend (development mode)
    npm run dev
-
 This command will start both:
 Frontend (React): Run at http://localhost:3000
-Backend (Node.js + Express): Run at http://localhost:5000
+Backend (Node.js + Express): Run at http://localhost:5001
 
 2. Start the frontend (React application)
+   npm run client
+   
+4. Start the backend (Node.js API)
+    npm run server
 
-### npm run client
-
-3. Start the backend (Node.js API)
-
-### npm run server
-
-4. Build the frontend project
-
-### npm run build
-
-This command will build the production version of the React application and put the output into the client/build folder.
+5. Build the frontend project
+    npm run build
 
 Data import and initialization
 There is an insertData.js script in the server directory, which is used to import the initial data into MongoDB.
 
 How to use
-Enter the server directory:
-
-### cd server
-
+1. Navigate to the server directory:
+   cd server
 Run the data import script:
-
-### node insertData.js
+   node insertData.js
 
 If successful, you will see the prompt "Data import successful!"
 
-File structure
-
-m-comm-dashboard/
-├── client/ # React front-end
-├── server/ # Node.js back-end
-├── package.json # Dependencies and scripts in the root directory
-└── README.md # Project description file
-
-Detailed description
-client: Contains the source code of the front-end React application.
-server: Contains the back-end API and database model.
-install-all: A quick script to install all dependencies at once.
-
-Environment variable configuration
-Create .env files in server and client respectively, and add the following environment variables:
-
+Environment Variable Configuration
+Make sure to create .env files in both the server and client directories:
 server/.env
-
 PORT=5001
-MONGODB_URI=
-JWT_SECRET=
+MONGODB_URI=<your_mongo_connection_string>
+JWT_SECRET=<your_jwt_secret>
 CORS_ORIGIN=http://localhost:3000
+STRIPE_SECRET_KEY=<your_stripe_secret_key>
+STRIPE_WEBHOOK_SECRET=<your_stripe_webhook_secret>
+NODE_ENV=development
 
 client/.env
-
 REACT_APP_API_URL=http://localhost:5001
-REACT_APP_GOOGLE_CLIENT=
-REACT_APP_GOOGLE_CLIENT_SECRET=
-REACT_APP_REACT_APP_GOOGLE_CLIENT=
+REACT_APP_GOOGLE_CLIENT=<your_google_client_id>
+REACT_APP_GOOGLE_CLIENT_SECRET=<your_google_client_secret>
+
