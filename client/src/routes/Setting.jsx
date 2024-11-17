@@ -1,17 +1,96 @@
-//setting frontend
-import React from 'react';
-
-//export default function setting() {
-//  return (
-//    <div className="space-y-8 p-6 bg-base-200 min-h-screen">
-//      <h1 className="text-3xl font-bold">setting </h1>
-//    </div>
-//  );
-//}
-
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthProvider';
 
 export default function Settings() {
+    const { user, loading } = useAuth();
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+        businessName: '',
+        about: '',
+        firstName: '',
+        lastName: '',
+        email: ''
+    });
+
+    // if not log in
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/signin');
+        } else if (user) {
+            // pre fill form
+            setFormData((prevData) => ({
+                ...prevData,
+                firstName: user.firstname || '',
+                businessName: user.businessName || '',
+                email: user.email || ''
+            }));
+        }
+    }, [user, loading, navigate]);
+
+    //handle input
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    //handle changge password
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.newPassword !== formData.confirmPassword) {
+            alert('New passwords do not match!');
+            return;
+        }
+
+        try {
+            console.log('Password change submitted:', {
+                currentPassword: formData.currentPassword,
+                newPassword: formData.newPassword
+            });
+
+            setFormData((prev) => ({
+                ...prev,
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            }));
+        } catch (error) {
+            console.error('Error changing password:', error);
+            alert('Failed to change password');
+        }
+    };
+    //handle perdonal information
+    const handleProfileSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log('Profile update submitted:', {
+                businessName: formData.businessName,
+                about: formData.about,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email
+            });
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Failed to update profile');
+        }
+    };
+
+    if (loading) {
+        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    }
+
+    if (!user) {
+        return null;
+    }
+
     return (
         <div className="relative isolate bg-base-200 px-6 py-24 sm:py-32 lg:px-8">
             <form>
@@ -20,7 +99,7 @@ export default function Settings() {
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base/7 font-semibold text-gray-900">Change Password</h2>
                         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                            <form action="#" method="POST" className="space-y-6">
+                            <form onSubmit={handlePasswordSubmit} className="space-y-6">
                                 <div>
                                     <label
                                         htmlFor="current-password"
@@ -31,11 +110,12 @@ export default function Settings() {
                                     <div className="mt-2">
                                         <input
                                             id="current-password"
-                                            name="current-password"
+                                            name="currentPassword"
                                             type="password"
+                                            value={formData.currentPassword}
+                                            onChange={handleInputChange}
                                             required
-                                            autoComplete="current-password"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                         />
                                     </div>
                                 </div>
@@ -47,11 +127,12 @@ export default function Settings() {
                                     <div className="mt-2">
                                         <input
                                             id="new-password"
-                                            name="new-password"
+                                            name="newPassword"
                                             type="password"
+                                            value={formData.newPassword}
+                                            onChange={handleInputChange}
                                             required
-                                            autoComplete="new-password"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                         />
                                     </div>
                                 </div>
@@ -66,11 +147,12 @@ export default function Settings() {
                                     <div className="mt-2">
                                         <input
                                             id="confirm-password"
-                                            name="confirm-password"
+                                            name="confirmPassword"
                                             type="password"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
                                             required
-                                            autoComplete="new-password"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                         />
                                     </div>
                                 </div>
@@ -106,11 +188,11 @@ export default function Settings() {
                                         </span>
                                         <input
                                             id="business-name"
-                                            name="business-name"
+                                            name="businessName"
                                             type="text"
-                                            placeholder="janesmith"
-                                            autoComplete="organization"
-                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm/6"
+                                            value={formData.businessName}
+                                            onChange={handleInputChange}
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                         />
                                     </div>
                                 </div>
@@ -125,8 +207,9 @@ export default function Settings() {
                                         id="about"
                                         name="about"
                                         rows={3}
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
-                                        defaultValue={''}
+                                        value={formData.about}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                     />
                                 </div>
                                 <p className="mt-3 text-sm/6 text-gray-600">
@@ -147,10 +230,11 @@ export default function Settings() {
                                 <div className="mt-2">
                                     <input
                                         id="first-name"
-                                        name="first-name"
+                                        name="firstName"
                                         type="text"
-                                        autoComplete="given-name"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                        value={formData.firstName}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                     />
                                 </div>
                             </div>
@@ -161,11 +245,12 @@ export default function Settings() {
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        id="last-name"
-                                        name="last-name"
-                                        type="text"
-                                        autoComplete="family-name"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                        id="lastname"
+                                        name="lastname"
+                                        type="lastname"
+                                        value={formData.lastName}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                     />
                                 </div>
                             </div>
@@ -179,8 +264,9 @@ export default function Settings() {
                                         id="email"
                                         name="email"
                                         type="email"
-                                        autoComplete="email"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 bg-transparent"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-transparent"
                                     />
                                 </div>
                             </div>

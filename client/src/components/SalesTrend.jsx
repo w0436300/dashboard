@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { getSalesTrend } from '../services/api';
-
+import { ProtectedChart } from './ProductedChart';
 const SalesTrendChart = () => {
   const [chartData, setChartData] = useState({
     series: [{ name: 'Sales', data: [] }],
@@ -47,7 +47,9 @@ const SalesTrendChart = () => {
 
   return (
     <div>
-      <Chart options={chartData.options} series={chartData.series} type="line" height={350} />
+      <ProtectedChart>
+              <Chart options={chartData.options} series={chartData.series} type="line" height={350} />
+      </ProtectedChart>
     </div>
   );
 };
