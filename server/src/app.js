@@ -11,6 +11,7 @@ const marketingRoutes = require('./routes/marketing');
 const customerInsightsRoutes = require('./routes/customerInsights');
 const subscriptionRoutes = require('./routes/subscription');
 const subscriptionController = require('./controllers/subscriptionController');
+const analyticsRoutes = require('./routes/analytics')
 const app = express();
 
 dotenv.config();
@@ -60,6 +61,8 @@ app.use('/api/marketing', marketingRoutes);
 //api/customer-insights/customer-ratio
 //api/customer-insights/geo-distribution
 app.use('/api/customer-insights', customerInsightsRoutes);
+app.use('/api/analytics', analyticsRoutes);
+
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });

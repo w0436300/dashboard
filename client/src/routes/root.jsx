@@ -202,6 +202,22 @@ export default function Root() {
                         </NavLink>
 
                         <NavLink
+                            to="/analytics"
+                            className={({ isActive }) => `
+                                flex items-center px-2 py-2 text-sm font-medium rounded-md
+                                ${
+                                    isActive
+                                        ? 'bg-base-200 text-base-content'
+                                        : 'text-base-content hover:bg-base-200 hover:text-base-content'
+                                }
+                            `}
+                            onClick={() => setIsSidebarOpen(false)}
+                        >
+                            <ChartBarIcon className="mr-3 h-6 w-6 text-gray-400" />
+                            Google Analytics
+                        </NavLink>
+
+                        <NavLink
                             to="/subscribe"
                             className={({ isActive }) => `
                                 flex items-center px-2 py-2 text-sm font-medium rounded-md

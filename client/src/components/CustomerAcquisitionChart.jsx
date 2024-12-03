@@ -23,7 +23,9 @@ export default function CustomerAcquisitionChart() {
             height: 350
         },
         title: {
-            align: 'center'
+            text: 'Customer Acquisition Cost',
+            align: 'center',
+            style: { fontSize: '20px', fontWeight: 'bold' }
         },
         xaxis: {
             categories: cacData.channels
@@ -45,7 +47,6 @@ export default function CustomerAcquisitionChart() {
 
     return (
         <div className="bg-base-200 rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Customer Acquisition Cost</h2>
             <Chart options={options} series={series} type="bar" height={350} />
         </div>
     );
