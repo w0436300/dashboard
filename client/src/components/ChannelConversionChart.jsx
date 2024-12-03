@@ -16,14 +16,18 @@ export default function ChannelConversionChart() {
     const options = {
         chart: { type: 'bar', height: 350 },
         xaxis: { categories: conversionData.channels },
-        yaxis: { title: { text: 'Conversions' } }
+        yaxis: { title: { text: 'Conversions' } },
+        title: {
+            text: 'Ad Channel Conversions',
+            align: 'center',
+            style: { fontSize: '20px', fontWeight: 'bold' }
+        },
     };
 
     const series = [{ name: 'Conversions', data: conversionData.conversions }];
 
     return (
         <div className="bg-base-200 rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Customer Acquisition Cost</h2>
             <Chart options={options} series={series} type="bar" height={350} />
         </div>
     );

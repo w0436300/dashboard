@@ -16,14 +16,17 @@
     "@react-oauth/google": "^0.12.1",
     "@stripe/react-stripe-js": "^2.9.0",
     "@stripe/stripe-js": "^4.10.0",
+    "@tremor/react": "^3.18.4",
     "apexcharts": "^3.54.1",
     "axios": "^1.7.7",
     "dashboard-1": "file:..",
+    "date-fns": "^3.6.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.5.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.13.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

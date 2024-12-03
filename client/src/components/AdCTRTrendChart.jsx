@@ -40,7 +40,8 @@ export default function AdCTRTrendChart() {
         },
         title: {
             text: 'Ad Click-Through Rate Trend',
-            align: 'center'
+            align: 'center',
+            style: { fontSize: '20px', fontWeight: 'bold' }
         },
         xaxis: {
             categories: ctrData.dates,
@@ -71,7 +72,6 @@ export default function AdCTRTrendChart() {
 
     return (
         <div className="bg-base-200 rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Ad Click-Through Rate Trend</h2>
             <Chart options={options} series={series} type="line" height={350} />
         </div>
     );

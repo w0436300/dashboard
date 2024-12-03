@@ -16,6 +16,8 @@ import Setting from './routes/Setting';
 import SuccessPage from './routes/successPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthProvider';
+import GoogleAnalytics from './components/GoogleAnalytics';
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
                     {
                         path: 'dashboard',
                         element: <Dashboard />
+                    },
+                    {
+                        path: 'analytics',
+                        element: <ProtectedRoute><GoogleAnalytics /></ProtectedRoute>
                     },
                     {
                         path: 'marketing-performance',
