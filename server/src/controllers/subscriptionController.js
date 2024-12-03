@@ -71,6 +71,11 @@ exports.createCheckoutSession = async (req, res) => {
 //checkout.session.completed 
 exports.handleWebhook = async (req, res) => {
     const signature = req.headers['stripe-signature'];
+    console.log('Webhook received:', {
+        hasSignature: !!req.headers['stripe-signature'],
+        body: req.body,
+        contentType: req.headers['content-type']
+    });
     
     try {
         const event = stripe.webhooks.constructEvent(
@@ -83,6 +88,12 @@ exports.handleWebhook = async (req, res) => {
 
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object;
+            console.log('Payment completed:', {
+                sessionId: session.id,
+                amount: session.amount_total,
+                status: session.payment_status,
+                customerEmail: session.customer_details?.email
+            });
             
             // get user id from session
             const userId = session.metadata?.userId || session.customer_metadata?.userId;
@@ -135,6 +146,10 @@ async function handleSubscriptionUpdate(userId) {
             },
             { new: true }
         );
+        console.log('Subscription updated:', {
+            success: !!updatedUser,
+            subscription: updatedUser?.subscription
+        });
 
         if (!updatedUser) {
             console.error('User not found:', userId);

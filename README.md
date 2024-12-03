@@ -83,6 +83,14 @@ STRIPE_WEBHOOK_SECRET=<your_stripe_webhook_secret>
 
 NODE_ENV=development
 
+GA_PROPERTY_ID-old=
+
+GOOGLE_APPLICATION_CREDENTIALS=
+
+GA_PROPERTY_ID=
+
+stripe listen --forward-to localhost:5001/api/subscription/webhook
+
 ### client/.env
 
 REACT_APP_API_URL=http://localhost:5001

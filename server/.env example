@@ -1,5 +1,12 @@
 PORT=5001
-MONGODB_URI=
+MONGODB_URI=mongodb+srv://dashboardDB:@cluster0.ubjhf.mongodb.net/dashboard?retryWrites=true&w=majority&appName=Cluster0
 JWT_SECRET=
 CORS_ORIGIN=http://localhost:3000
 STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET
+NODE_ENV=development
+GA_PROPERTY_ID-old=
+GOOGLE_APPLICATION_CREDENTIALS=
+GA_PROPERTY_ID=
+
+stripe listen --forward-to localhost:5001/api/subscription/webhook
