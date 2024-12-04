@@ -23,11 +23,11 @@ export const ProtectedChart = ({ children }) => {
         return () => clearInterval(interval);
     }, [fetchUser]);
  
-    useEffect(() => {
-        if (user?.subscription?.status === 'active') {
-            fetchUser();
-        }
-    }, [user?.subscription?.status]);
+    // useEffect(() => {
+    //     if (user?.subscription?.status === 'active') {
+    //         fetchUser();
+    //     }
+    // }, [user?.subscription?.status]);
  
     if (!user) {
         return (

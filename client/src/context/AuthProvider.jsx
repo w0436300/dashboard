@@ -154,7 +154,8 @@ export const AuthProvider = ({ children }) => {
         refreshUser,
         updateSubscription,
         hasActiveSubscription,
-        isAuthenticated: !!user
+        isAuthenticated: !!user,
+        fetchUser 
     };
 
 
