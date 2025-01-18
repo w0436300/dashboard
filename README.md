@@ -99,5 +99,8 @@ REACT_APP_API_URL=http://localhost:5001
 REACT_APP_GOOGLE_CLIENT=<your_google_client_id>
 
 REACT_APP_GOOGLE_CLIENT_SECRET=<your_google_client_secret>
+![dashboard2](https://github.com/user-attachments/assets/1b9e7565-8dc8-4697-9f55-2d04a53feb94)
+![dashboard-web](https://github.com/user-attachments/assets/b5b68bd2-646c-4893-a99f-9b6ccaf07303)
+![dashboard-web2](https://github.com/user-attachments/assets/7ce3549c-161f-46bc-8f7c-7eb3bf746437)
 
 
