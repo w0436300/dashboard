@@ -1,7 +1,9 @@
 # M-Commerce Analytics Dashboard
 This is a full-stack project based on React (front-end) and Node.js + Express (back-end). It provides a dashboard for analyzing and displaying e-commerce data. The project uses Create React App to set up the front-end and builds the back-end API using Express.js.
 <img width="891" alt="Screenshot 2025-01-14 at 2 06 17 PM" src="https://github.com/user-attachments/assets/0952adb3-da74-4e3d-bf4b-c8aa7038ffc8" />
-
+![dashboard2](https://github.com/user-attachments/assets/1b9e7565-8dc8-4697-9f55-2d04a53feb94)
+![dashboard-web](https://github.com/user-attachments/assets/b5b68bd2-646c-4893-a99f-9b6ccaf07303)
+![dashboard-web2](https://github.com/user-attachments/assets/7ce3549c-161f-46bc-8f7c-7eb3bf746437)
 
 ## Project Structure
 m-comm-dashboard/
@@ -99,8 +101,6 @@ REACT_APP_API_URL=http://localhost:5001
 REACT_APP_GOOGLE_CLIENT=<your_google_client_id>
 
 REACT_APP_GOOGLE_CLIENT_SECRET=<your_google_client_secret>
-![dashboard2](https://github.com/user-attachments/assets/1b9e7565-8dc8-4697-9f55-2d04a53feb94)
-![dashboard-web](https://github.com/user-attachments/assets/b5b68bd2-646c-4893-a99f-9b6ccaf07303)
-![dashboard-web2](https://github.com/user-attachments/assets/7ce3549c-161f-46bc-8f7c-7eb3bf746437)
+
 
 
